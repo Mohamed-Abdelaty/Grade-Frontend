@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --color-app: var(--app);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--line);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-soft: var(--brand-soft);
+  --color-accent: var(--accent);
+  --color-from: var(--grad-from);
+  --color-to: var(--grad-to);
+
+  --animate-fade-up: fade-up 0.5s ease-out both;
+  --animate-fade-in: fade-in 0.4s ease-out both;
+  --animate-pop: pop 0.25s ease-out both;
+  --animate-slide-in: slide-in 0.3s ease-out both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+  --animate-gradient: gradient-shift 8s ease infinite;
+  --animate-blob: blob 14s ease-in-out infinite;
+  --animate-pulse-ring: pulse-ring 1.8s ease-out infinite;
+  --animate-log-in: log-in 0.25s ease-out both;
+  --animate-stripes: stripes 1s linear infinite;
+  --animate-bob: bob 3s ease-in-out infinite;
+  --animate-page-in: page-in 0.35s ease-out backwards;
+  --animate-shake: shake 0.4s ease-in-out;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(14px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  @keyframes pop {
+    from { opacity: 0; transform: scale(0.94); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes slide-in {
+    from { opacity: 0; transform: translateX(24px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  @keyframes shimmer {
+    from { background-position: -200% 0; }
+    to { background-position: 200% 0; }
+  }
+  @keyframes gradient-shift {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+  }
+  @keyframes blob {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    33% { transform: translate(30px, -40px) scale(1.1); }
+    66% { transform: translate(-25px, 25px) scale(0.95); }
+  }
+  @keyframes pulse-ring {
+    0% { box-shadow: 0 0 0 0 currentColor; opacity: 1; }
+    80%, 100% { box-shadow: 0 0 0 7px transparent; opacity: 0.9; }
+  }
+  @keyframes log-in {
+    from { opacity: 0; transform: translateX(-6px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes stripes {
+    from { background-position: 0 0; }
+    to { background-position: 28px 0; }
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-5px); }
+  }
+  @keyframes page-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+  }
+}
+
+/* إصلاح خلفية الإكمال التلقائي (Autofill) في المتصفحات لضمان الخلفية البيضاء والنص الأسود */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #ffffff inset !important;
+  -webkit-text-fill-color: #0f172a !important;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+/* أنيميشن الأشكال العائمة للخلفية */
+@keyframes floatBlob1 {
+  0%, 100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  33% { transform: translate(45px, -35px) scale(1.1) rotate(8deg); }
+  66% { transform: translate(-25px, 25px) scale(0.95) rotate(-5deg); }
+}
+
+@keyframes floatBlob2 {
+  0%, 100% { transform: translate(0px, 0px) scale(1) rotate(0deg); }
+  33% { transform: translate(-35px, 45px) scale(1.12) rotate(-10deg); }
+  66% { transform: translate(25px, -20px) scale(0.92) rotate(6deg); }
+}
+
+@keyframes pulseOpacity {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 0.75; }
+}
+
+.animate-blob-1 {
+  animation: floatBlob1 14s ease-in-out infinite, pulseOpacity 8s ease-in-out infinite;
+}
+
+.animate-blob-2 {
+  animation: floatBlob2 18s ease-in-out infinite, pulseOpacity 10s ease-in-out infinite 2s;
+}
+
+.animate-blob-3 {
+  animation: floatBlob1 22s ease-in-out infinite reverse, pulseOpacity 12s ease-in-out infinite 4s;
+}
+
+.progress-stripes {
+  background-image: linear-gradient(
+    45deg,
+    rgb(255 255 255 / 0.25) 25%,
+    transparent 25%,
+    transparent 50%,
+    rgb(255 255 255 / 0.25) 50%,
+    rgb(255 255 255 / 0.25) 75%,
+    transparent 75%
+  );
+  background-size: 28px 28px;
+}
+
+.react-flow__edge.animated path {
+  stroke: var(--brand);
+  stroke-width: 2;
+}
+
+:root {
+  --app: #f8fafc;
+  --surface: #ffffff;
+  --surface-2: #f1f5f9;
+  --line: #e2e8f0;
+  --fg: #0f172a;
+  --muted: #64748b;
+  --brand: #4f46e5;
+  --brand-soft: #eef2ff;
+  --accent: #f43f5e;
+  --grad-from: #6366f1;
+  --grad-to: #8b5cf6;
+}
+
+.dark {
+  --app: #080c14;
+  --surface: #0d1527;
+  --surface-2: #131c31;
+  --line: #1e293b;
+  --fg: #f8fafc;
+  --muted: #94a3b8;
+  --brand: #6366f1;
+  --brand-soft: #1e1b4b;
+  --accent: #fb7185;
+  --grad-from: #4f46e5;
+  --grad-to: #7c3aed;
+}
+
+body {
+  background-color: var(--app);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* انتقال ناعم لما الثيم يتغيّر */
+body,
+aside,
+header,
+main {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* احترام خيار تقليل الحركة (Accessibility) */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
