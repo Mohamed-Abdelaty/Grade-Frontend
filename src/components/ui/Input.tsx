@@ -11,23 +11,35 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
     const id = useId()
     return (
       <div className="flex flex-col gap-1.5 w-full">
-        <label htmlFor={id} className="text-xs font-bold text-slate-700">
+        {/* عنوان الحقل: يظهر باللون الأبيض الناصع في الوضع الداكن */}
+        <label
+          htmlFor={id}
+          className="text-xs font-bold text-slate-700 dark:text-white"
+        >
           {label}
         </label>
+
+        {/* حقل الإدخال: دعم الخلفيات، الحدود، والنصوص للـ Dark Mode والـ Teal Focus */}
         <input
           id={id}
           ref={ref}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-error` : undefined}
-          className={`w-full rounded-xl border bg-white px-4 py-3 text-sm font-semibold text-slate-900 placeholder:text-slate-400 transition-all duration-200 focus:bg-white focus:text-slate-900 focus:outline-none focus:ring-4 disabled:cursor-not-allowed disabled:opacity-50 ${
+          className={`w-full rounded-xl border px-4 py-3 text-sm font-semibold transition-all duration-200 outline-none disabled:cursor-not-allowed disabled:opacity-50 bg-white text-slate-900 placeholder:text-slate-400 focus:bg-white focus:text-slate-900 dark:bg-slate-900/90 dark:text-white dark:placeholder:text-slate-500 dark:focus:bg-slate-900 dark:focus:text-white ${
             error
-              ? 'border-rose-500 focus:border-rose-500 focus:ring-rose-500/15'
-              : 'border-slate-300 focus:border-indigo-600 focus:ring-indigo-500/15'
+              ? 'border-rose-500 focus:border-rose-500 focus:ring-4 focus:ring-rose-500/15 dark:border-rose-500'
+              : 'border-slate-300 focus:border-teal-500 focus:ring-4 focus:ring-teal-500/15 dark:border-slate-800 dark:focus:border-teal-400 dark:focus:ring-teal-400/20'
           } ${className}`}
           {...props}
         />
+
+        {/* رسالة الخطأ */}
         {error && (
-          <p id={`${id}-error`} role="alert" className="text-xs font-semibold text-rose-600 animate-fade-up">
+          <p
+            id={`${id}-error`}
+            role="alert"
+            className="text-xs font-semibold text-rose-600 dark:text-rose-400 animate-fade-up"
+          >
             {error}
           </p>
         )}

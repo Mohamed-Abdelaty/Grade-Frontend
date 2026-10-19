@@ -92,11 +92,11 @@ export function RegisterPage() {
       </form>
 
       {/* رابط Sign in باللون الأسود */}
-      <div className="mt-4 flex items-center justify-center gap-1.5 text-xs font-semibold">
-        <span className="text-slate-500">Already have an account?</span>
+     <div className="mt-4 text-center text-xs font-semibold text-slate-600 dark:text-slate-300">
+        Already have an account?{' '}
         <Link
           to="/login"
-          className="text-slate-900 font-bold transition hover:text-teal-600 hover:underline"
+          className="font-bold text-teal-600 underline underline-offset-4 transition-colors hover:text-teal-700 dark:text-teal-400 dark:hover:text-teal-300"
         >
           Sign in
         </Link>
