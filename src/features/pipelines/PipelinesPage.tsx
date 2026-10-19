@@ -85,30 +85,39 @@ export function PipelinesPage() {
       render: (p) => (
         <Link
           to={`/pipelines/${p.id}/edit`}
-          className="font-bold text-white transition-colors duration-150 hover:text-indigo-300 hover:underline"
+          className="font-bold text-slate-900 transition-colors duration-150 hover:text-teal-600 hover:underline dark:text-white dark:hover:text-teal-400"
         >
           {p.name}
         </Link>
       ),
     },
     { header: 'Status', render: (p) => <StatusBadge status={p.status} /> },
-    { header: 'Version', render: (p) => `v${p.version}` },
-    { header: 'Nodes', render: (p) => p.nodes_count },
-    { header: 'Updated', render: (p) => formatDate(p.updated_at) },
+    {
+      header: 'Version',
+      render: (p) => <span className="font-medium text-slate-700 dark:text-slate-300">v{p.version}</span>,
+    },
+    {
+      header: 'Nodes',
+      render: (p) => <span className="font-medium text-slate-700 dark:text-slate-300">{p.nodes_count}</span>,
+    },
+    {
+      header: 'Updated',
+      render: (p) => <span className="text-xs font-medium text-slate-600 dark:text-slate-400">{formatDate(p.updated_at)}</span>,
+    },
     {
       header: 'Actions',
       render: (p) => (
         <div className="flex gap-2">
           <Button
             variant="secondary"
-            className="px-2 py-1 text-xs font-semibold"
+            className="px-3 py-1.5 text-xs font-bold"
             onClick={() => navigate(`/pipelines/${p.id}/edit`)}
           >
             Edit
           </Button>
           <Button
             variant="secondary"
-            className="px-2 py-1 text-xs font-semibold"
+            className="px-3 py-1.5 text-xs font-bold"
             loading={duplicate.isPending && duplicate.variables === p.id}
             onClick={() => duplicate.mutate(p.id)}
           >
@@ -116,7 +125,7 @@ export function PipelinesPage() {
           </Button>
           <Button
             variant="danger"
-            className="px-2 py-1 text-xs font-semibold"
+            className="px-3 py-1.5 text-xs font-bold"
             onClick={() => setTarget(p)}
           >
             Delete
@@ -127,14 +136,23 @@ export function PipelinesPage() {
   ]
 
   return (
-    <div className="flex flex-col gap-5 text-slate-100">
-      <div className="flex items-center justify-between">
-        <h1 className="text-2xl font-extrabold tracking-tight text-white">Pipelines</h1>
-        <Button onClick={() => navigate('/pipelines/new/edit')}>New pipeline</Button>
+    <div className="flex flex-col gap-6 font-sans text-slate-900 dark:text-slate-100">
+      {/* عنوان الصفحة والزر الرئيسي - مع إضافة ألوان الدارك مود */}
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Pipelines</h1>
+          <p className="mt-1 text-sm font-medium text-slate-500 dark:text-slate-400">
+            Manage, design, and run your data processing pipelines
+          </p>
+        </div>
+        <Button onClick={() => navigate('/pipelines/new/edit')} className="font-bold">
+          + New pipeline
+        </Button>
       </div>
 
-      <div className="flex flex-wrap items-end gap-3">
-        <div className="w-64">
+      {/* شريط البحث والفلاتر - متوافق مع الفاتح والداكن */}
+      <div className="flex flex-wrap items-end gap-4 rounded-2xl border border-slate-200/80 bg-white p-4 shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
+        <div className="w-full sm:w-64">
           <Input
             label="Search"
             placeholder="Search by name"
@@ -171,10 +189,11 @@ export function PipelinesPage() {
         />
       </div>
 
+      {/* التحميل والأخطاء */}
       {isLoading && (
         <div className="flex flex-col gap-2" aria-busy="true">
           {Array.from({ length: 5 }, (_, i) => (
-            <Skeleton key={i} className="h-10 w-full" />
+            <Skeleton key={i} className="h-12 w-full rounded-xl bg-slate-200/60 dark:bg-slate-800" />
           ))}
         </div>
       )}
@@ -201,12 +220,17 @@ export function PipelinesPage() {
         />
       )}
 
+      {/* الجدول والترقيم */}
       {data && filtered.length > 0 && (
-        <>
-          <Table columns={columns} rows={visible} rowKey={(p) => p.id} />
-          <div className="flex items-center justify-between text-sm text-slate-400">
-            <span>
-              Page {currentPage} of {totalPages} ({filtered.length} pipelines)
+        <div className="space-y-4">
+          <div className="overflow-hidden rounded-2xl border border-slate-200/80 bg-white shadow-xs dark:border-slate-800 dark:bg-slate-900/90">
+            <Table columns={columns} rows={visible} rowKey={(p) => p.id} />
+          </div>
+
+          <div className="flex items-center justify-between text-sm text-slate-700 dark:text-slate-300">
+            <span className="font-bold">
+              Page <span className="text-slate-900 dark:text-white">{currentPage}</span> of{' '}
+              <span className="text-slate-900 dark:text-white">{totalPages}</span> ({filtered.length} pipelines)
             </span>
             <div className="flex gap-2">
               <Button
@@ -225,9 +249,10 @@ export function PipelinesPage() {
               </Button>
             </div>
           </div>
-        </>
+        </div>
       )}
 
+      {/* نافذة الحذف التأكيدية */}
       <Modal
         open={target !== null}
         onClose={() => setTarget(null)}
@@ -247,7 +272,9 @@ export function PipelinesPage() {
           </>
         }
       >
-        <strong>{target?.name}</strong> will be permanently deleted. This action cannot be undone.
+        <p className="text-sm font-medium text-slate-700 dark:text-slate-300">
+          <strong className="font-bold text-slate-900 dark:text-white">{target?.name}</strong> will be permanently deleted. This action cannot be undone.
+        </p>
       </Modal>
     </div>
   )

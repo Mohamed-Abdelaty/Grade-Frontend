@@ -23,20 +23,20 @@ export function ForgotPasswordPage() {
 
   return (
     <AuthShell
-      title="Forgot password?"
-      subtitle="Enter your email to receive a password reset link"
+      title="Forgot Password"
+      subtitle="Enter your name and email address to reset your password"
     >
       {mutation.isSuccess ? (
         <div className="flex flex-col items-center gap-4 text-center animate-fade-up">
-          <div className="flex size-12 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xl font-bold text-emerald-400">
+          <div className="flex size-12 items-center justify-center rounded-full border border-emerald-500/30 bg-emerald-500/10 text-xl font-bold text-emerald-600 dark:text-emerald-400">
             ✓
           </div>
-          <p role="status" className="text-sm font-medium text-slate-300">
-            If an account exists for that email, a reset link has been sent.
+          <p role="status" className="text-sm font-semibold text-slate-700 dark:text-slate-300">
+            If an account exists for that email, a password reset link has been sent.
           </p>
           <Link
             to="/login"
-            className="mt-2 text-sm font-bold text-indigo-400 transition-colors hover:text-indigo-300 hover:underline"
+            className="mt-2 text-sm font-extrabold text-teal-600 transition-colors hover:text-teal-700 hover:underline dark:text-teal-400 dark:hover:text-teal-300"
           >
             Back to sign in
           </Link>
@@ -48,6 +48,15 @@ export function ForgotPasswordPage() {
           noValidate
         >
           <Input
+            label="Name"
+            type="text"
+            autoComplete="name"
+            placeholder="John Doe"
+            error={errors.name?.message}
+            {...register('name')}
+          />
+
+          <Input
             label="Email"
             type="email"
             autoComplete="email"
@@ -57,7 +66,7 @@ export function ForgotPasswordPage() {
           />
 
           {mutation.error && (
-            <p role="alert" className="text-xs font-semibold text-rose-400">
+            <p role="alert" className="text-xs font-bold text-rose-600 dark:text-rose-400">
               {mutation.error.message}
             </p>
           )}
@@ -65,16 +74,16 @@ export function ForgotPasswordPage() {
           <Button
             type="submit"
             loading={mutation.isPending}
-            className="mt-2 w-full bg-indigo-600 font-bold text-white shadow-indigo-600/25 shadow-lg hover:bg-indigo-500 active:scale-[0.98]"
+            className="mt-2 w-full rounded-xl bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 py-3.5 font-bold text-sm text-white shadow-lg shadow-teal-600/25 hover:from-teal-500 hover:to-cyan-500 active:scale-[0.98]"
           >
-            Send reset link
+            Send Reset Link
           </Button>
 
-          <div className="mt-2 text-center text-sm text-slate-400">
+          <div className="mt-2 text-center text-sm font-medium text-slate-600 dark:text-slate-400">
             Remembered your password?{' '}
             <Link
               to="/login"
-              className="font-bold text-indigo-400 transition-colors hover:text-indigo-300 hover:underline"
+              className="font-extrabold text-teal-600 transition-colors hover:text-teal-700 hover:underline dark:text-teal-400 dark:hover:text-teal-300"
             >
               Back to sign in
             </Link>

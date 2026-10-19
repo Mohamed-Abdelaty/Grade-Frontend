@@ -26,24 +26,29 @@ export function PipelineBuilderPage() {
 
   if (plugins.isLoading || (!isNew && pipeline.isLoading)) {
     return (
-      <div className="flex flex-col gap-3">
-        <Skeleton className="h-8 w-64" />
-        <Skeleton className="h-96 w-full" />
+      <div className="flex flex-col gap-4 p-6 font-sans">
+        <Skeleton className="h-9 w-64 rounded-xl bg-slate-200/60" />
+        <div className="flex h-[calc(100vh-10rem)] gap-4">
+          <Skeleton className="h-full w-56 rounded-2xl bg-slate-200/60" />
+          <Skeleton className="h-full flex-1 rounded-2xl bg-slate-200/60" />
+        </div>
       </div>
     )
   }
 
   if (plugins.error || pipeline.error || !plugins.data || !initial) {
     return (
-      <EmptyState
-        title="Could not load the builder"
-        description="Check your connection or that the pipeline exists, then try again."
-      />
+      <div className="p-6">
+        <EmptyState
+          title="Could not load the builder"
+          description="Check your connection or that the pipeline exists, then try again."
+        />
+      </div>
     )
   }
 
   return (
-    <div className="-m-6 flex h-[calc(100vh-3.5rem)] overflow-hidden">
+    <div className="-m-6 flex h-[calc(100vh-4rem)] overflow-hidden bg-slate-50 font-sans text-slate-900">
       <Palette plugins={plugins.data} />
       <ReactFlowProvider>
         <BuilderCanvas key={initial.id} initial={initial} plugins={plugins.data} />

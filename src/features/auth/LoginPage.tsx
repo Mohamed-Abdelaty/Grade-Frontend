@@ -59,7 +59,7 @@ export function LoginPage() {
         {mutation.error && (
           <div
             role="alert"
-            className="animate-shake rounded-xl border border-rose-500/30 bg-rose-500/10 p-3 text-xs font-semibold text-rose-400"
+            className="animate-shake rounded-xl border border-rose-200 bg-rose-50 p-3 text-xs font-semibold text-rose-600 dark:border-rose-900/50 dark:bg-rose-950/50 dark:text-rose-400"
           >
             {mutation.error.message}
           </div>
@@ -68,19 +68,23 @@ export function LoginPage() {
         <Button
           type="submit"
           loading={mutation.isPending}
-          className="mt-2 w-full rounded-xl bg-linear-to-r from-violet-600 via-purple-600 to-indigo-600 py-3.5 font-bold text-sm text-white shadow-lg shadow-purple-600/25 transition-all duration-200 hover:-translate-y-0.5 hover:from-violet-500 hover:to-indigo-500 hover:shadow-purple-600/40 active:translate-y-0 disabled:opacity-60"
+          className="mt-2 w-full rounded-xl bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-600 py-3.5 font-bold text-sm text-white shadow-lg shadow-teal-600/25 transition-all duration-200 hover:-translate-y-0.5 hover:from-teal-500 hover:to-cyan-500 hover:shadow-teal-600/40 active:translate-y-0 disabled:opacity-60"
         >
           Sign in
         </Button>
       </form>
 
       <div className="mt-4 flex items-center justify-between text-xs font-semibold">
-        <span className="text-xs font-medium text-slate-500 cursor-default select-none">
-  Forgot password?
-</span>
+        <Link
+          to="/forgot-password"
+          className="font-bold !text-teal-600 transition hover:!text-teal-700 hover:underline dark:!text-teal-400 dark:hover:!text-teal-300"
+        >
+          Forgot password?
+        </Link>
         <Link
           to="/register"
-          className="text-violet-400 transition hover:text-violet-300 hover:underline"
+          style={{ color: '#14b8a6', textDecorationColor: '#14b8a6' }}
+          className="font-bold !text-[#14b8a6]  transition-opacity hover:opacity-80 dark:!text-[#14b8a6]"
         >
           Create account
         </Link>

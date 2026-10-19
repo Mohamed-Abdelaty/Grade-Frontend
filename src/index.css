@@ -91,7 +91,7 @@
   }
 }
 
-/* إصلاح خلفية الإكمال التلقائي (Autofill) في المتصفحات لضمان الخلفية البيضاء والنص الأسود */
+/* إصلاح خلفية الإكمال التلقائي (Autofill) في المتصفحات */
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
@@ -150,9 +150,9 @@ input:-webkit-autofill:active {
 }
 
 :root {
-  --app: #f8fafc;
+  --app: #ffffff;            /* تحويل من #f8fafc إلى أبيض ناصع */
   --surface: #ffffff;
-  --surface-2: #f1f5f9;
+  --surface-2: #f8fafc;      /* خفضها درجة لتكون متناسقة مع الأبيض */
   --line: #e2e8f0;
   --fg: #0f172a;
   --muted: #64748b;
@@ -161,6 +161,12 @@ input:-webkit-autofill:active {
   --accent: #f43f5e;
   --grad-from: #6366f1;
   --grad-to: #8b5cf6;
+  --bg-main: #ffffff;        /* تحويل من #f8fafc إلى أبيض ناصع */
+  --bg-card: #ffffff;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --border-color: #e2e8f0;
+  --primary-color: #3b82f6;
 }
 
 .dark {
@@ -178,10 +184,10 @@ input:-webkit-autofill:active {
 }
 
 body {
-  background-color: var(--app);
-  color: var(--fg);
-  font-family: var(--font-sans);
-  -webkit-font-smoothing: antialiased;
+  background-color: #ffffff !important; /* فرض الخلفية البيضاء مباشرة */
+  color: var(--text-main);
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
 }
 
 /* انتقال ناعم لما الثيم يتغيّر */

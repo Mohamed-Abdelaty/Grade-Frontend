@@ -1,3 +1,24 @@
+:root {
+  --social-bg: #f1f5f9;      /* خلفية فاتحة للروابط والأزرار */
+  --accent-bg: #f0fdfa;      /* خلفية خفيفة للـ counter (Teal-50) */
+  --accent-border: #99f6e4;  /* لون حدود الـ counter عند التحويم (Teal-200) */
+  --border: #e2e8f0;         /* لون الفواصل والحدود */
+  --text-h: #0f172a;         /* لون النصوص الداكنة للوضوح على الخلفية البيضاء */
+  --accent: #0d9488;         /* لون التركواز الأساسي (Teal-600) */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+/* دعم متغيّرات وضع الدارك مود Dark Mode */
+.dark {
+  --social-bg: #1e293b;      /* Slate-800 */
+  --accent-bg: #115e59;      /* Teal-900 */
+  --accent-border: #14b8a6;  /* Teal-500 */
+  --border: #334155;         /* Slate-700 */
+  --text-h: #f8fafc;         /* Slate-50 */
+  --accent: #2dd4bf;         /* Teal-400 */
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.3);
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -5,7 +26,7 @@
   color: var(--accent);
   background: var(--accent-bg);
   border: 2px solid transparent;
-  transition: border-color 0.3s;
+  transition: border-color 0.3s, background-color 0.3s, color 0.3s;
   margin-bottom: 24px;
 
   &:hover {
@@ -57,6 +78,7 @@
 }
 
 #center {
+  background-color: transparent; /* إزالة الخلفية البيضاء الصلبة لتتبع الثيم العام */
   display: flex;
   flex-direction: column;
   gap: 25px;
@@ -71,6 +93,7 @@
 }
 
 #next-steps {
+  background-color: transparent; /* إزالة الخلفية البيضاء الصلبة لتتبع الثيم العام */
   display: flex;
   border-top: 1px solid var(--border);
   text-align: left;
@@ -125,7 +148,7 @@
     align-items: center;
     gap: 8px;
     text-decoration: none;
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, background-color 0.3s, color 0.3s;
 
     &:hover {
       box-shadow: var(--shadow);
@@ -155,6 +178,7 @@
 
 #spacer {
   height: 88px;
+  background-color: transparent; /* إزالة الخلفية البيضاء الصلبة */
   border-top: 1px solid var(--border);
   @media (max-width: 1024px) {
     height: 48px;
