@@ -11,9 +11,15 @@ interface NavItem {
   roles?: Role[]
 }
 
+// إضافة جميع روابط Phase 2 مع تحديد الأيقونات والأدوار (Audit Log للأدمن فقط)
 const navItems: NavItem[] = [
   { to: '/', label: 'Dashboard', icon: '◧' },
   { to: '/pipelines', label: 'Pipelines', icon: '⎇' },
+  { to: '/schedules', label: 'Schedules', icon: '⏱' },
+  { to: '/templates', label: 'Templates', icon: '⬡' },
+  { to: '/notifications', label: 'Notifications', icon: '🔔' },
+  { to: '/api-keys', label: 'API Keys', icon: '🔑' },
+  { to: '/audit-log', label: 'Audit Log', icon: '📋', roles: ['admin'] },
 ]
 
 export function AppLayout() {
@@ -23,6 +29,7 @@ export function AppLayout() {
   const location = useLocation()
   const [menuOpen, setMenuOpen] = useState(false)
 
+  // تصفية العناصر المعروضة بناءً على صلاحية المستخدم
   const visible = navItems.filter(
     (item) => !item.roles || (user && item.roles.includes(user.role)),
   )
@@ -127,12 +134,12 @@ export function AppLayout() {
           {visible.map((item, i) => (
             <NavLink
               key={item.to}
-              style={{ animationDelay: `${100 + i * 80}ms` }}
+              style={{ animationDelay: `${100 + i * 60}ms` }}
               to={item.to}
               end={item.to === '/'}
               onClick={() => setMenuOpen(false)}
               className={({ isActive }) =>
-                `animate-slide-item relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-200 hover:translate-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
+                `animate-slide-item relative flex items-center gap-3 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 hover:translate-x-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-500 ${
                   isActive
                     ? 'border border-teal-200/80 bg-teal-50 text-teal-700 shadow-xs font-bold dark:border-teal-800/60 dark:bg-teal-950/60 dark:text-teal-300'
                     : 'text-slate-600 hover:bg-teal-50/60 hover:text-teal-700 dark:text-slate-400 dark:hover:bg-slate-800/60 dark:hover:text-teal-300'
