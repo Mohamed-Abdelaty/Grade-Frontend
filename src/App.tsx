@@ -13,6 +13,7 @@ import { SchedulesPage } from '@/features/schedules/SchedulesPage'
 import { TemplatesPage } from '@/features/templates/TemplatesPage'
 import { NotificationsPage } from '@/features/notifications/NotificationsPage'
 import { AuditLogPage } from '@/features/audit-log/AuditLogPage'
+import { HistoryPage } from '@/features/history/HistoryPage'
 
 // Phase 2 Preferences Placeholder
 const NotificationPreferencesPage = () => (
@@ -44,6 +45,7 @@ export default function App() {
           <Route index element={<DashboardPage />} />
           <Route path="pipelines" element={<PipelinesPage />} />
           <Route path="schedules" element={<SchedulesPage />} />
+          <Route path="history" element={<HistoryPage />} />
           <Route path="templates" element={<TemplatesPage />} />
           <Route path="notifications" element={<NotificationsPage />} />
           <Route path="notifications/preferences" element={<NotificationPreferencesPage />} />

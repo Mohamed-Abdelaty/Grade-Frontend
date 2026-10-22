@@ -44,9 +44,8 @@ export function NotificationsPage() {
     },
   ])
 
-  // تعليم إشعار واحد كمقروء
-  const markAsRead = (id: string, e?: React.MouseEvent) => {
-    e?.stopPropagation()
+  // تعليم الإشعار كمقروء فقط
+  const markAsRead = (id: string) => {
     setNotifications((prev) =>
       prev.map((item) => (item.id === id ? { ...item, read: true } : item))
     )
@@ -59,22 +58,20 @@ export function NotificationsPage() {
 
   // حذف إشعار واحد
   const deleteNotification = (id: string, e: React.MouseEvent) => {
-    e.stopPropagation()
+    e.stopPropagation() // منع جعل الرسالة مقروءة عند الضغط على الحذف
     setNotifications((prev) => prev.filter((item) => item.id !== id))
   }
 
-  // مسح جميع الإشعارات
+  // مسح كافة الإشعارات
   const clearAll = () => {
     setNotifications([])
   }
 
-  // عند الضغط على الإشعار: تعليمه كمقروء والانتقال للرابط الخاص به
-  const handleNotificationClick = (item: NotificationItem) => {
-    if (!item.read) {
-      markAsRead(item.id)
-    }
-    if (item.link) {
-      navigate(item.link)
+  // الضغط على النص للتوجيه المباشر
+  const handleTextClick = (e: React.MouseEvent, link?: string) => {
+    e.stopPropagation() // عدم التضارب مع الضغط على الكارت
+    if (link) {
+      navigate(link)
     }
   }
 
@@ -94,28 +91,31 @@ export function NotificationsPage() {
             )}
           </div>
           <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
-            Real-time pipeline failure alerts and system notifications. Click to navigate.
+            Click anywhere on a notification to mark as read, or click the text to open the target page.
           </p>
         </div>
 
-        {/* Action Buttons */}
+        {/* Global Controls - Clear All button is set to White in Dark Mode */}
         <div className="flex items-center gap-2">
           {unreadCount > 0 && (
             <button
               type="button"
               onClick={markAllAsRead}
-              className="rounded-xl border border-teal-200 bg-teal-50/50 px-3.5 py-2 text-xs font-bold text-teal-700 transition hover:bg-teal-100 dark:border-teal-800/60 dark:bg-teal-950/40 dark:text-teal-300 dark:hover:bg-teal-900/60"
+              className="rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-semibold text-slate-700 shadow-xs hover:bg-slate-50 dark:border-slate-700/60 dark:bg-slate-800/50 dark:text-slate-200 dark:hover:bg-slate-800 transition"
             >
-              ✓ Mark all as read
+              Mark all as read
             </button>
           )}
           {notifications.length > 0 && (
             <button
               type="button"
               onClick={clearAll}
-              className="rounded-xl border border-rose-200 bg-rose-50/50 px-3.5 py-2 text-xs font-bold text-rose-700 transition hover:bg-rose-100 dark:border-rose-800/60 dark:bg-rose-950/40 dark:text-rose-300 dark:hover:bg-rose-900/60"
+              className="flex items-center gap-1.5 rounded-xl border border-slate-200 bg-white px-3.5 py-2 text-xs font-bold text-slate-700 shadow-xs transition hover:bg-slate-100 dark:border-white dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100"
             >
-              🗑 Clear all
+              <svg className="size-3.5 text-slate-600 dark:text-slate-900" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
+              <span>Clear all</span>
             </button>
           )}
         </div>
@@ -125,58 +125,55 @@ export function NotificationsPage() {
       <div className="space-y-3">
         {notifications.length === 0 ? (
           <div className="rounded-2xl border border-dashed border-slate-300 p-12 text-center text-slate-400 dark:border-slate-800">
-            <p className="text-3xl mb-2">🔔</p>
-            <p className="text-sm font-semibold">No notifications available.</p>
+            <p className="text-sm font-medium">No notifications available.</p>
           </div>
         ) : (
           notifications.map((item) => {
             const typeStyles = {
               error: {
-                badge: 'bg-rose-500/10 text-rose-600 border-rose-200 dark:border-rose-800 dark:text-rose-400',
                 indicator: 'bg-rose-500',
-                border: 'hover:border-rose-300 dark:hover:border-rose-700',
               },
               success: {
-                badge: 'bg-emerald-500/10 text-emerald-600 border-emerald-200 dark:border-emerald-800 dark:text-emerald-400',
                 indicator: 'bg-emerald-500',
-                border: 'hover:border-emerald-300 dark:hover:border-emerald-700',
               },
               warning: {
-                badge: 'bg-amber-500/10 text-amber-600 border-amber-200 dark:border-amber-800 dark:text-amber-400',
                 indicator: 'bg-amber-500',
-                border: 'hover:border-amber-300 dark:hover:border-amber-700',
               },
               info: {
-                badge: 'bg-teal-500/10 text-teal-600 border-teal-200 dark:border-teal-800 dark:text-teal-400',
                 indicator: 'bg-teal-500',
-                border: 'hover:border-teal-300 dark:hover:border-teal-700',
               },
             }[item.type]
 
             return (
               <div
                 key={item.id}
-                onClick={() => handleNotificationClick(item)}
-                className={`group relative flex cursor-pointer items-start justify-between gap-4 rounded-2xl border p-4 transition-all duration-200 shadow-xs ${typeStyles.border} ${
+                onClick={() => markAsRead(item.id)}
+                className={`group relative flex cursor-pointer items-start justify-between gap-4 rounded-2xl border p-4 transition-all duration-200 ${
                   item.read
-                    ? 'border-slate-200 bg-slate-100/80 dark:border-slate-800/80 dark:bg-slate-900/40'
-                    : 'border-teal-500/40 bg-white dark:border-teal-500/40 dark:bg-slate-900'
+                    ? 'border-slate-200/80 bg-slate-50/60 dark:border-slate-800/60 dark:bg-slate-900/30'
+                    : 'border-teal-500/30 bg-white shadow-xs dark:border-teal-500/30 dark:bg-slate-900'
                 }`}
               >
-                {/* Indicator Line for Unread */}
+                {/* Side Bar for Unread Status */}
                 {!item.read && (
-                  <span className="absolute top-4 left-0 h-8 w-1 rounded-r-full bg-teal-500 shadow-xs" />
+                  <span className="absolute top-4 left-0 h-8 w-1 rounded-r-full bg-teal-500" />
                 )}
 
                 <div className="flex items-start gap-3.5 pl-1.5">
                   <span className={`mt-1 flex size-2.5 shrink-0 rounded-full ${typeStyles.indicator}`} />
-                  <div className="space-y-1">
+                  
+                  {/* Text Container: Clickable to Navigate */}
+                  <div 
+                    onClick={(e) => handleTextClick(e, item.link)}
+                    className="space-y-1 hover:opacity-80 transition"
+                    title={item.link ? 'Click text to open resource' : ''}
+                  >
                     <div className="flex flex-wrap items-center gap-2">
                       <h3
                         className={`text-sm tracking-tight ${
                           item.read
                             ? 'font-medium text-slate-700 dark:text-slate-300'
-                            : 'font-extrabold text-slate-900 dark:text-white'
+                            : 'font-bold text-slate-900 dark:text-white'
                         }`}
                       >
                         {item.title}
@@ -189,36 +186,20 @@ export function NotificationsPage() {
                     <p className="text-xs leading-relaxed text-slate-600 dark:text-slate-400">
                       {item.message}
                     </p>
-
-                    {item.link && (
-                      <span className="inline-flex items-center gap-1 text-[11px] font-bold text-teal-600 group-hover:underline dark:text-teal-400">
-                        Go to resource →
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                {/* Individual Actions (Mark as Read + Delete) */}
-                <div className="flex shrink-0 items-center gap-1">
-                  {!item.read && (
-                    <button
-                      type="button"
-                      title="Mark as read"
-                      onClick={(e) => markAsRead(item.id, e)}
-                      className="rounded-lg p-1.5 text-xs font-bold text-slate-400 hover:bg-slate-200/60 hover:text-teal-600 dark:hover:bg-slate-800 dark:hover:text-teal-400 transition"
-                    >
-                      ✓
-                    </button>
-                  )}
-                  <button
-                    type="button"
-                    title="Delete notification"
-                    onClick={(e) => deleteNotification(item.id, e)}
-                    className="rounded-lg p-1.5 text-xs font-bold text-slate-400 hover:bg-rose-100 hover:text-rose-600 dark:hover:bg-rose-950/50 dark:hover:text-rose-400 transition"
-                  >
-                    ✕
-                  </button>
-                </div>
+                {/* Trash Icon for Single Delete */}
+                <button
+                  type="button"
+                  title="Delete notification"
+                  onClick={(e) => deleteNotification(item.id, e)}
+                  className="rounded-xl p-2 text-slate-400 opacity-60 transition hover:bg-slate-100 hover:text-slate-700 dark:hover:bg-slate-800 dark:hover:text-slate-200 group-hover:opacity-100"
+                >
+                  <svg className="size-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                  </svg>
+                </button>
               </div>
             )
           })

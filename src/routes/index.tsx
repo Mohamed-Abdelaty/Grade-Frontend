@@ -8,7 +8,7 @@ import { PipelinesPage } from '@/features/pipelines/PipelinesPage'
 import { RunDetailsPage } from '@/features/runs/RunDetailsPage'
 import { Placeholder } from './Placeholder'
 import { ProtectedRoute } from './ProtectedRoute'
-
+import { ProfilePage } from '@/features/profile/ProfilePage'
 // Phase 2 Real Components
 import { ApiKeysPage } from '@/features/api-keys/ApiKeysPage'
 import { SchedulesPage } from '@/features/schedules/SchedulesPage'
@@ -16,11 +16,13 @@ import { TemplatesPage } from '@/features/templates/TemplatesPage'
 import { NotificationsPage } from '@/features/notifications/NotificationsPage'
 import { NotificationPreferencesPage } from '@/features/notifications/NotificationPreferencesPage'
 import { AuditLogPage } from '@/features/audit-log/AuditLogPage'
-
+import { HistoryPage } from '@/features/history/HistoryPage'
+import { QualityPage } from '@/features/quality/QualityPage'
 export const router = createBrowserRouter([
   { path: '/login', element: <LoginPage /> },
   { path: '/register', element: <RegisterPage /> },
   { path: '/forgot-password', element: <Placeholder title="Forgot password" /> },
+  { path: '/profile', element: <ProfilePage /> },
   {
     element: <ProtectedRoute />,
     children: [
@@ -34,11 +36,13 @@ export const router = createBrowserRouter([
 
           /* Phase 2 Routes */
           { path: '/schedules', element: <SchedulesPage /> },
+          { path: '/history', element: <HistoryPage /> },
           { path: '/templates', element: <TemplatesPage /> },
           { path: '/notifications', element: <NotificationsPage /> },
           { path: '/notifications/preferences', element: <NotificationPreferencesPage /> },
           { path: '/api-keys', element: <ApiKeysPage /> },
           { path: '/audit-log', element: <AuditLogPage /> },
+          { path: '/quality', element: <QualityPage /> },
         ],
       },
     ],
